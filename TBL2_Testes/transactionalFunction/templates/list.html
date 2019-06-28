@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+{% block content %}
+    <div class="card" style="width: 18rem;">
+        <a href="{% url 'transactionalFunction:create' %}" method='post' class="float-right">Criar</a><br>
+        <form method="GET" action="{% url 'transactionalFunction:list' %}" id="filter-form">
+            <label>Filtrar por complexidade:</label>
+            <select name="complexity-filter" onchange="document.querySelector('#filter-form').submit();">
+                <option value="todas" selected>Todas</option>
+                <option {% if complexityFilter == "baixa" %} selected {% endif%}value="baixa">Baixa</option>
+                <option {% if complexityFilter == "média" %} selected {% endif%} value="média">Média</option>
+                <option {% if complexityFilter == "alta" %} selected {% endif%} value="alta">Alta</option>
+            </select>
+            <br>
+            <label>Filtrar por tipo:</label>
+            <select name="type-filter" onchange="document.querySelector('#filter-form').submit();">
+                    <option value="todos" selected>Todos</option>
+                    <option {% if typeFilter == "EE" %} selected {% endif%} value="EE">EE</option>
+                    <option {% if typeFilter == "CE" %} selected {% endif%} value="CE">CE</option>
+                    <option {% if typeFilter == "SE" %} selected {% endif%}  value="SE">SE</option>
+                </select>
+        </form>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nome da Funcionalidade</th>
+                    <th>Tipo da Funcionalidade</th>
+                    <th>Qtd de ALRs</th>
+                    <th>Qtd de DERs</th>
+                    <th>Complexidade da função</th>
+                    <th>Quantidade de pontos de função</th>
+                    <th>Nome do Contador</th>
+                    <th>Data de Cadastramento</th>
+                </tr>
+            </thead>
+            <tbody>    
+                {% for transactionalFunction in transactionalsFunctions  %}
+                    <tr>
+                        <td> {{ transactionalFunction.functionalityName }} </a></td>
+                        <td> {{ transactionalFunction.functionalityType }}</td>
+                        <td> {{ transactionalFunction.qtdALR }}</td>
+                        <td> {{ transactionalFunction.qtdDER }}</td>
+                        <td> {{ transactionalFunction.functionComplexity }}</td>
+                        <td> {{ transactionalFunction.qtdFunctionPts }}</td>
+                        <td> {{ transactionalFunction.countName }}</td>
+                        <td> {{ transactionalFunction.registrationDate|date:"d/m/Y"}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>        
+        </table>
+        <p>Total de pontos EE: {{ sumEE }}</p>
+        <p>Total de pontos CE: {{ sumCE }}</p>
+        <p>Total de pontos SE: {{ sumSE }}</p>
+    </div>
+{% endblock %}
