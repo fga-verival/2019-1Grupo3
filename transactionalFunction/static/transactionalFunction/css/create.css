@@ -1,0 +1,14 @@
+p.error-field{
+  color: red;
+  font-size: 15px;
+}
+
+input.error-field{
+  border-style: solid;
+  border-color: red;
+}
+
+select.error-field{
+  border-style: solid;
+  border-color: red;
+}
